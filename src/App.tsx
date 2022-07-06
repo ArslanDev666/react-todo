@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Input from "./components/Input";
 import Item from "./components/Item";
@@ -37,7 +37,6 @@ function App() {
         status: initialStatus,
         task,
       };
-
       const isIncluded = tasks.find((t) => t.task.toLowerCase() === task.toLowerCase());
 
       if (isIncluded) {
@@ -45,31 +44,26 @@ function App() {
         return;
       }
 
-      setTasks((prevTasks) => {
-        const updateTasks = [newTask, ...prevTasks];
-
-        localStorage.setItem("todo-tasks", JSON.stringify(updateTasks));
-
-        return updateTasks;
-      });
+      setTasks((prevTasks) => [newTask, ...prevTasks]);
     },
     [tasks]
   );
 
   const handleChangeTaskStatus = useCallback((changedTask: string, newStatus: TStatuses) => {
-    setTasks((prevTasks) => {
-      const updateTasks = prevTasks.map((t) => {
+    if (newStatus === "clear") {
+      setTasks((prevTasks) => prevTasks.filter((t) => t.task !== changedTask));
+      return;
+    }
+
+    setTasks((prevTasks) =>
+      prevTasks.map((t) => {
         if (t.task === changedTask) {
           t.status = newStatus;
         }
 
         return t;
-      });
-
-      localStorage.setItem("todo-tasks", JSON.stringify(updateTasks));
-
-      return updateTasks;
-    });
+      })
+    );
   }, []);
 
   const handleChangeFilter = useCallback((filter: TFilter) => {
@@ -77,17 +71,17 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const tasks = localStorage.getItem("todo-tasks");
+    localStorage.setItem("todo-tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
-    if (!tasks) {
-      setTasks(initialTasks);
+  useEffect(() => {
+    const localTasks = localStorage.getItem("todo-tasks");
 
-      localStorage.setItem("todo-tasks", JSON.stringify(initialTasks));
+    if (!localTasks) return setTasks(initialTasks);
 
-      return;
-    }
+    const parseTasks = JSON.parse(localTasks);
 
-    setTasks(JSON.parse(tasks));
+    setTasks(!parseTasks.length ? initialTasks : parseTasks);
   }, []);
 
   return (

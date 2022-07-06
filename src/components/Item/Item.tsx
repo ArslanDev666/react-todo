@@ -1,6 +1,6 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
-import { MdAutorenew, MdDelete, MdDone } from "react-icons/md";
+import { MdAutorenew, MdDelete, MdDeleteForever, MdDone } from "react-icons/md";
 import { TStatuses, TTask } from "../../ts/task";
 
 import "./styles.css";
@@ -27,6 +27,7 @@ const Item = ({ status, task, onChangeStatus }: IItemProps) => {
             <MdAutorenew />
           </button>
         )}
+
         {status !== "completed" && status !== "deleted" && (
           <button
             className="todo-item__action todo-item__action_complete"
@@ -36,6 +37,17 @@ const Item = ({ status, task, onChangeStatus }: IItemProps) => {
             <MdDone />
           </button>
         )}
+
+        {status === "deleted" && (
+          <button
+            className="todo-item__action todo-item__action_delete"
+            title="delete absolutely"
+            onClick={() => onChangeStatus(task, "clear")}
+          >
+            <MdDeleteForever />
+          </button>
+        )}
+
         {status !== "deleted" && (
           <button
             className="todo-item__action todo-item__action_delete"
