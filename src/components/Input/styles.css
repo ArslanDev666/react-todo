@@ -7,8 +7,8 @@
 .todo-input__text {
   width: 225px;
   padding: 6px 34px 6px 10px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  border: 1px solid var(--gray-color);
+  border-radius: 5px;
 
   font-size: inherit;
   font-family: inherit;
@@ -20,18 +20,18 @@
 .todo-input__add {
   padding: 8px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
 
-  color: #ffffff;
+  color: var(--text-white-color);
   font-weight: bold;
   font-size: 18px;
 
-  background-color: #8bc34a;
+  background-color: var(--sky-color);
   cursor: pointer;
 
   transition: background-color 0.15s;
 }
 
 .todo-input__add:hover {
-  background: #77a740;
+  background: var(--sky-color);
 }

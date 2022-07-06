@@ -1,13 +1,24 @@
 .todo {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 400px;
+  justify-content: center;
+  max-width: 600px;
   margin: 15px auto;
 }
 
 .todo__header {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+}
+
+.todo__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding-left: 0;
+
+  list-style: none;
 }
